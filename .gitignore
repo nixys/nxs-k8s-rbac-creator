@@ -1,0 +1,27 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.OD
+.idea/
+.history/
+
+# cred
+*-cred*
+
+# misc
+*.code-workspace
+*.vscode
+
+# Local .terraform directories
+**/.terraform/*
+
+# local .tfstate files
+*.tfstate
+*.tfstate.*
+.terraform
+
+# lock files
+.terraform.lock.hcl
+
+# Crash log files
+crash.log
+
+# Generated files
+**/files/**
