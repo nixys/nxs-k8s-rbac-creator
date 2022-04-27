@@ -25,12 +25,14 @@ k8s-rbac-controller is an open source module for terraform. This module create s
 * * * `api_groups`: list of api groups.
 * * * `resources`: list of resources.
 * * * `verbs`: list of verbs.
+* * * `resource_names`(optional): white list of names that the rule applies to.
 * `cluster_roles_list`: list of cluster roles.
 * * `name`: cluster role name.
 * * `rules`: list of rules.
 * * * `api_groups`: list of api groups.
 * * * `resources`: list of resources.
 * * * `verbs`: list of verbs.
+* * * `resource_names`(optional): white list of names that the rule applies to.
 * `sa_list`: list of service accounts.
 * * `name`:  service account name.
 * * `namespace`:  service account namespace.
