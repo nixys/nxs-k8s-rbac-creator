@@ -64,22 +64,26 @@ variable "k8s_config_context" {
 #==================== K8S users ==================== #
 variable "roles_list" {
   description = "List to create roles."
-  type = list(object(
-    {
-      name      = string,
-      namespace = string,
-      rules = list(object(
-        {
-          api_groups = list(string),
-          resources  = list(string),
-          verbs      = list(string)
-      }))
-    })
-  )
+  type        = any
+
+  validation {
+    condition     = alltrue([for i in var.roles_list : anytrue([length(lookup(i, "name", [])) > 0 ? true : false])])
+    error_message = "\"name\" must be set!"
+  }
+
+  validation {
+    condition     = alltrue([for i in var.roles_list : anytrue([length(lookup(i, "namespace", [])) > 0 ? true : false])])
+    error_message = "\"namespace\" must be set!"
+  }
 
   validation {
     condition     = alltrue([for i in var.roles_list : alltrue([length(i.rules) > 0 ? true : false])])
     error_message = "Rules list must not be empty!"
+  }
+
+  validation {
+    condition     = alltrue([for i in var.roles_list : alltrue([for j in i.rules : anytrue([length(lookup(j, "api_groups", [])) > 0 ? true : false])])])
+    error_message = "\"rules[].api_groups.\" must be set!"
   }
 
   validation {
@@ -88,8 +92,18 @@ variable "roles_list" {
   }
 
   validation {
+    condition     = alltrue([for i in var.roles_list : alltrue([for j in i.rules : anytrue([length(lookup(j, "resources", [])) > 0 ? true : false])])])
+    error_message = "\"rules[].resources.\" must be set!"
+  }
+
+  validation {
     condition     = alltrue([for i in var.roles_list : alltrue([for j in i.rules : length(j.resources) > 0 ? true : false])])
     error_message = "List of resources must not be empty!"
+  }
+
+  validation {
+    condition     = alltrue([for i in var.roles_list : alltrue([for j in i.rules : anytrue([length(lookup(j, "verbs", [])) > 0 ? true : false])])])
+    error_message = "\"rules[].verbs.\" must be set!"
   }
 
   validation {
@@ -99,23 +113,45 @@ variable "roles_list" {
 
 }
 
-variable "cluster_roles_list" {
-  description = "List to create cluster roles."
-  type = list(object(
+variable "default_roles_list" {
+  description = "Defautl values for roles_list."
+  type = object(
     {
-      name = string,
+      name      = string,
+      namespace = string,
       rules = list(object(
         {
-          api_groups = list(string),
-          resources  = list(string),
-          verbs      = list(string)
+          api_groups     = list(string),
+          resources      = list(string),
+          verbs          = list(string),
+          resource_names = list(string)
       }))
-    })
+    }
   )
+  default = {
+    name      = null
+    namespace = null
+    rules     = []
+  }
+}
+
+variable "cluster_roles_list" {
+  description = "List to create cluster roles."
+  type        = any
+
+  validation {
+    condition     = alltrue([for i in var.cluster_roles_list : anytrue([length(lookup(i, "name", [])) > 0 ? true : false])])
+    error_message = "\"name\" must be set!"
+  }
 
   validation {
     condition     = alltrue([for i in var.cluster_roles_list : alltrue([length(i.rules) > 0 ? true : false])])
     error_message = "Rules list must not be empty!"
+  }
+
+  validation {
+    condition     = alltrue([for i in var.cluster_roles_list : alltrue([for j in i.rules : anytrue([length(lookup(j, "api_groups", [])) > 0 ? true : false])])])
+    error_message = "\"rules[].api_groups.\" must be set!"
   }
 
   validation {
@@ -124,8 +160,18 @@ variable "cluster_roles_list" {
   }
 
   validation {
+    condition     = alltrue([for i in var.cluster_roles_list : alltrue([for j in i.rules : anytrue([length(lookup(j, "resources", [])) > 0 ? true : false])])])
+    error_message = "\"rules[].resources.\" must be set!"
+  }
+
+  validation {
     condition     = alltrue([for i in var.cluster_roles_list : alltrue([for j in i.rules : length(j.resources) > 0 ? true : false])])
     error_message = "List of resources must not be empty!"
+  }
+
+  validation {
+    condition     = alltrue([for i in var.cluster_roles_list : alltrue([for j in i.rules : anytrue([length(lookup(j, "verbs", [])) > 0 ? true : false])])])
+    error_message = "\"rules[].verbs.\" must be set!"
   }
 
   validation {
@@ -133,6 +179,25 @@ variable "cluster_roles_list" {
     error_message = "List of verbs must not be empty!"
   }
 
+}
+
+variable "default_cluster_roles_list" {
+  description = "Defautl values for cluster_roles_list."
+  type = object(
+    {
+      name = string,
+      rules = list(object(
+        {
+          api_groups     = list(string),
+          resources      = list(string),
+          verbs          = list(string),
+          resource_names = list(string)
+      }))
+  })
+  default = {
+    name  = null
+    rules = []
+  }
 }
 
 variable "sa_list" {

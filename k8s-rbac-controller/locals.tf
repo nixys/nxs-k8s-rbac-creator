@@ -1,12 +1,26 @@
 locals {
-  roles_array = flatten([for i in var.roles_list : {
+  roles_list_array = [for i in var.roles_list :
+    merge(
+      var.default_roles_list,
+      i,
+    )
+  ]
+
+  roles_array = flatten([for i in local.roles_list_array : {
     name      = i.name
     namespace = i.namespace
     rules     = i.rules
     }
   ])
 
-  cluster_roles_array = flatten([for i in var.cluster_roles_list : {
+  cluster_roles_list = [for i in var.cluster_roles_list :
+    merge(
+      var.default_cluster_roles_list,
+      i,
+    )
+  ]
+
+  cluster_roles_array = flatten([for i in local.cluster_roles_list : {
     name  = i.name
     rules = i.rules
     }
