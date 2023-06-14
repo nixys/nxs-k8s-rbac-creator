@@ -4,7 +4,6 @@ terraform {
   required_providers {
     tls      = {}
     local    = {}
-    template = {}
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = ">= 2.7.1"
