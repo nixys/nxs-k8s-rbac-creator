@@ -49,7 +49,7 @@ resource "local_file" "sa_kubeconfigs" {
     k8s_cluster_name           = var.k8s_cluster_name
     sa_name                    = each.value["name"]
     namespace                  = each.value["namespace"]
-    sa_token                   = lookup(data.kubernetes_secret.sa["${each.value["name"]}_${each.value["namespace"]}"].data, "token")
+    sa_token                   = lookup(resource.kubernetes_secret.sa["${each.value["name"]}_${each.value["namespace"]}"].data, "token")
   })
   file_permission      = "0600"
   directory_permission = "0700"
