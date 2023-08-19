@@ -1,5 +1,5 @@
 module "k8s-rbac-controller" {
-  source = "../k8s-rbac-controller"
+  source = "github.com/nixys/nxs-k8s-rbac-creator"
 
   output_files_path = "./files"
 
