@@ -36,7 +36,7 @@ $ terraform apply
 | `output_files_path` | true | ./files | The path to directorie where save generated tls files and kubeconfig for users and service accounts |
 | `k8s_api_endpoint` | | true | The hostname (in form of URI) of the Kubernetes API. Variables `k8s_api_endpoint`, `k8s_auth_cluster_ca_certificate` and `k8s_cluster_name` needed for generate kubeconfig |
 | `k8s_insecure` | true | false | Whether the server should be accessed without verifying the TLS certificate |
-| `k8s_cluster_name` | true | | k8s cluster name |
+| `k8s_cluster_name` | true | | Kubernetes cluster name |
 | `k8s_auth_cluster_ca_certificate` | true | | PEM-encoded root certificates bundle for TLS authentication. One of field `raw` or `encoded` must be set. If both are given, the `raw` field will be used |
 | `k8s_auth_cluster_ca_certificate.raw` | false | | Raw certificate. Example: "-----BEGIN CERTIFICATE-----\nMIIELDCCApSgAwIBAgIQcLahmhzRbVMSRZX2cQXtuTANBgkqhkiG9w0BAQsFADAv\n...\n-----END CERTIFICATE-----\n". |
 | `k8s_auth_cluster_ca_certificate.encoded` | false | | Base64 encoded certificate |
