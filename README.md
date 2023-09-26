@@ -1,3 +1,5 @@
+![nxs-k8s-rbac-creator](https://github.com/nixys/nxs-k8s-rbac-creator/assets/23610059/f0739477-f32f-466f-ac6f-773bb6dcaa74)
+
 # nxs-k8s-rbac-creator
 
 ## Introduction
