@@ -4,7 +4,7 @@
 
 ## Introduction
 
-nxs-k8s-rbac-creator is a Terraform (>= v1.0.0) module that create RBAC rules for Kubernetes.
+nxs-k8s-rbac-creator is a Terraform (>= v1.0.0) module that creates RBAC rules for Kubernetes.
 
 ### Features
 
